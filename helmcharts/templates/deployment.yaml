@@ -7,7 +7,7 @@ metadata:
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
-      matchLabels:
+     matchLabels:
         {{- include "helmcharts.selectorLabels" . | nindent 6 }}
   template:
     metadata:
