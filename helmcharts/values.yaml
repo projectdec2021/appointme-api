@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: priya4/user-api
   pullPolicy: IfNotPresent
 
 service:
@@ -10,3 +10,5 @@ service:
   targetPort: 5000
   nodePort: 30002
   name: userapi
+container:
+  name: user-api

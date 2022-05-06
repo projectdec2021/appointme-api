@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "user-api"
+  name: {{ .Release.Name }}
   labels: 
-    app: user-api
+    {{- include "helmcharts.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
       matchLabels:
-        app: "user-api"
+        {{- include "helmcharts.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: user-api
+        {{- include "helmcharts.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: "user-api"
-          image: "priya4/user-api"
-          imagePullPolicy: "IfNotPresent"
+        - name: {{ .Values.container.name }}
+          image: {{ .Values.image.repository | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 5000
+            - containerPort: {{ .Values.service.targetPort }}
