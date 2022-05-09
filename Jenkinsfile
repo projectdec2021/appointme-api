@@ -10,6 +10,13 @@ pipeline {
             sh "${scannerHome}/bin/sonar-scanner"     
            }
         }
-     }
+     } //stage
+      stage("Quality Gate") {
+            steps {
+              timeout(time: 10, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
    }
 }
