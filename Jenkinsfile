@@ -24,7 +24,7 @@ pipeline {
               withCredentials([usernamePassword(credentialsId: 'priya-docker-secret', passwordVariable: 'pass', usernameVariable: 'user')]) {
                 sh """ 
                   sudo docker login -u ${user} -p ${pass}
-                  sudo docker -t priya4/appoint-api:${BUILD_NUMBER} .
+                  sudo docker build -t priya4/appoint-api:${BUILD_NUMBER} .
                   docker push priya4/appoint-api:${BUILD_NUMBER}
                 """
               }              
