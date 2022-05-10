@@ -17,6 +17,13 @@ pipeline {
                 waitForQualityGate abortPipeline: true
               }
             }
-          }
+          } //end of stage
+      
+      stage("Docker build") {
+            steps {
+              sh "sudo docker -t appoint-api:${BUILD_NUMBER} ."
+            }
+          } //end of stage
+     
    }
 }
