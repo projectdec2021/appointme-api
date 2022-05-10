@@ -26,7 +26,7 @@ pipeline {
                   
                   sudo docker build -t priya4/appoint-api:${BUILD_NUMBER} .
                   sudo docker login -u ${user} -p ${pass}
-                  docker push priya4/appoint-api:${BUILD_NUMBER}
+                  sudo docker push priya4/appoint-api:${BUILD_NUMBER}
                 """
               }              
             }
