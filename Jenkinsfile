@@ -38,7 +38,7 @@ pipeline {
       
       stage("Trivy Docker scan") {
             steps {
-              sh """ trivy image ${nexus_url}:8082/appoint-api:${BUILD_NUMBER} 
+              sh """ sudo trivy image ${nexus_url}:8082/appoint-api:${BUILD_NUMBER} 
                sudo docker rmi ${nexus_url}:8082/appoint-api:${BUILD_NUMBER}"""             
             }
           } //end of stage
