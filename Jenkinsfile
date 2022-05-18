@@ -27,8 +27,15 @@ pipeline {
                   sudo docker build -t 34.122.223.20:8082/appoint-api:${BUILD_NUMBER} .
                   sudo docker login  -u ${user} -p ${pass} 34.122.223.20:8082
                   sudo docker push 34.122.223.20:8082/appoint-api:${BUILD_NUMBER}
+                  sudo docker rmi 34.122.223.20:8082/appoint-api:${BUILD_NUMBER}
                 """
               }              
+            }
+          } //end of stage
+      
+      stage("Trivy Docker scan") {
+            steps {
+              sh """ trivy image 34.122.223.20:8082/appoint-api:${BUILD_NUMBER} """             
             }
           } //end of stage
       
