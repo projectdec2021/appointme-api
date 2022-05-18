@@ -30,7 +30,7 @@ pipeline {
                   sudo docker build -t ${nexus_url}:8082/appoint-api:${BUILD_NUMBER} .
                   sudo docker login  -u ${user} -p ${pass} ${nexus_url}:8082
                   sudo docker push ${nexus_url}:8082/appoint-api:${BUILD_NUMBER}
-                  sudo docker rmi ${nexus_url}:8082/appoint-api:${BUILD_NUMBER}
+                 
                 """
               }              
             }
@@ -38,7 +38,8 @@ pipeline {
       
       stage("Trivy Docker scan") {
             steps {
-              sh """ trivy image ${nexus_url}:8082/appoint-api:${BUILD_NUMBER} """             
+              sh """ trivy image ${nexus_url}:8082/appoint-api:${BUILD_NUMBER} 
+               sudo docker rmi ${nexus_url}:8082/appoint-api:${BUILD_NUMBER}"""             
             }
           } //end of stage
       
