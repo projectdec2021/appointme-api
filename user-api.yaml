@@ -32,7 +32,7 @@
       spec:
         containers:
           - name: "user-api"
-            image: "priya4/userapi"
+            image: "priya4/appointme"
             imagePullPolicy: "IfNotPresent"
             ports:
               - containerPort: 5000
