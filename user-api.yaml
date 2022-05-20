@@ -34,7 +34,7 @@
           - name: registry-secret
         containers:
           - name: "user-api"
-            image: "priya4/appointme"
+            image: ""
             imagePullPolicy: "IfNotPresent"
             ports:
               - containerPort: 5000
