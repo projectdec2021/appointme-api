@@ -30,6 +30,8 @@
         labels:
           app: user-api
       spec:
+        imagePullSecrets:
+          - name: registry-secret
         containers:
           - name: "user-api"
             image: "priya4/appointme"
