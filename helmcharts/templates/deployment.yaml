@@ -14,6 +14,8 @@ spec:
       labels:
         {{- include "helmcharts.selectorLabels" . | nindent 8 }}
     spec:
+      imagePullSecrets:
+        - name: registry-secret
       containers:
         - name: {{ .Values.container.name }}
           image: {{ .Values.image.repository | quote }}
