@@ -3,6 +3,7 @@ replicaCount: 1
 image:
   repository: priya4/user-api
   pullPolicy: IfNotPresent
+  tag: late
 
 service:
   type: NodePort
