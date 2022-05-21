@@ -5,7 +5,7 @@ pipeline {
        nexus_url = '34.136.48.223'
     }
     stages {
-      stage('SonarQube analysis') {
+      /*stage('SonarQube analysis') {
         environment{
                scannerHome = tool 'sonar-scanner'
           }
@@ -21,7 +21,7 @@ pipeline {
                 waitForQualityGate abortPipeline: true
               }
             }
-          } //end of stage
+          } //end of stage */
       
       stage("Docker build") {
             steps {
