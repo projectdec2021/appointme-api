@@ -2,7 +2,7 @@ pipeline {
   agent any 
   environment {
        date_format = new Date().format('dd-MM-yy-HHmm')
-       nexus_url = '35.232.16.59'
+       nexus_url = '34.136.48.223'
     }
     stages {
       stage('SonarQube analysis') {
