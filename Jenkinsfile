@@ -25,7 +25,7 @@ pipeline {
       
       stage("Docker build") {
             steps {
-              echo "${env.BRANCH_NAME}"
+              echo "${BRANCH_NAME}"
                 sh """                
                   sudo docker build -t ${nexus_url}:8082/appoint-api:${date_format} .                
                 """
