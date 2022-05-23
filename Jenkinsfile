@@ -25,7 +25,7 @@ pipeline {
       
       stage("Docker build") {
             steps {
-              
+              echo "${env.BRANCH_NAME}"
                 sh """                
                   sudo docker build -t ${nexus_url}:8082/appoint-api:${date_format} .                
                 """
@@ -50,7 +50,7 @@ pipeline {
         
           steps {
             script {
-              if (env.BRANCH_NAME == 'main') {
+              if ("${env.BRANCH_NAME1}" == 'main') {
                   withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {       
                      sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'             
                   } 
