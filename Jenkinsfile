@@ -46,6 +46,11 @@ pipeline {
             }
           } //end of stage
       stage("Deploy to k8s cluster") {
+        when {
+           anyOf { 
+			       branch 'main' 
+		       }
+        }
           steps {
               withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
                 
