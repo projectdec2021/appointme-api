@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: priya4/user-api
+  pullPolicy: IfNotPresent
+  tag: late
+
+service:
+  type: NodePort
+  port: 5000
+  targetPort: 5000
+  nodePort: 30002
+  name: userapi
+container:
+  name: user-api
