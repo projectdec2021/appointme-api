@@ -45,18 +45,19 @@ pipeline {
               }  
             }
           } //end of stage
+    
       stage("Deploy to k8s cluster") {
-        when {
-          branch 'main' 		   
-        }
+        
           steps {
-              withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {
-                
-                sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'
-               
-             } 
+            script {
+              if (env.BRANCH_NAME == 'main') {
+                  withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {       
+                     sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'             
+                  } 
+              }
             }
-          } //end of stage
+          }
+      } //end of stage
       
      
    }
