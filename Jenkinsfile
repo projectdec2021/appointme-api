@@ -35,10 +35,9 @@ pipeline {
       
       stage("Trivy Docker scan & push") {
             steps {
-              withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'user')]) {
-              //  sudo trivy image ${nexus_url}:8082/appoint-api:${date_format} 
+              withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'user')]) {   
               sh """ 
-              
+              sudo trivy image ${nexus_url}:8082/appoint-api:${date_format} 
               sudo docker login  -u ${user} -p ${pass} ${nexus_url}:8082
               sudo docker push ${nexus_url}:8082/appoint-api:${date_format}
               sudo docker rmi ${nexus_url}:8082/appoint-api:${date_format} 
