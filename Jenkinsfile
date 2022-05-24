@@ -36,8 +36,9 @@ pipeline {
       stage("Trivy Docker scan & push") {
             steps {
               withCredentials([usernamePassword(credentialsId: 'nexus-secret', passwordVariable: 'pass', usernameVariable: 'user')]) {
+              //  sudo trivy image ${nexus_url}:8082/appoint-api:${date_format} 
               sh """ 
-              sudo trivy image ${nexus_url}:8082/appoint-api:${date_format} 
+              
               sudo docker login  -u ${user} -p ${pass} ${nexus_url}:8082
               sudo docker push ${nexus_url}:8082/appoint-api:${date_format}
               sudo docker rmi ${nexus_url}:8082/appoint-api:${date_format} 
@@ -49,14 +50,17 @@ pipeline {
       stage("Deploy to k8s cluster") {
         
           steps {
-            script {
-              echo "${env.BRANCH_NAME}"
-              if ("${env.BRANCH_NAME}" == 'main') {
-                  withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {       
-                     sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'             
-                  } 
-              }
+           when {
+                expression {
+                    env.GIT_BRANCH.contains("main")
+                           }
             }
+              echo "${BRANCH_NAME}"
+              if ("${BRANCH_NAME}" == 'main') {
+                  withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {       
+                     sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'                            
+                  }
+              }
           }
       } //end of stage
       
