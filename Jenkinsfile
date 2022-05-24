@@ -48,13 +48,14 @@ pipeline {
           } //end of stage
     
       stage("Deploy to k8s cluster") {
-        
-          steps {
-           when {
+        when {
                 expression {
                     env.GIT_BRANCH.contains("main")
                            }
             }
+        
+          steps {
+           
                   withCredentials([kubeconfigFile(credentialsId: 'kubeconfig-cred', variable: 'KUBECONFIG')]) {       
                      sh 'helm upgrade --install --set image.repository="${nexus_url}:8082/appoint-api" --set image.tag="${date_format}" appoint-api helmcharts/'                            
                   }
